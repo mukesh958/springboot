@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,13 @@ public class EmployeeControler {
 	@Autowired
 	EmployeeService employeeService;
 	
-	@GetMapping()
+	@PostMapping
+	public ResponseEntity<?> saveEmployee(@Validated @RequestBody EmpRequset request){
+		Employee emp= employeeService.saveEmployee(request);
+		log.info("saved employee with empid {} ",emp.getId());
+		return new ResponseEntity<>("saved employee with empid "+ emp.getId(),HttpStatus.OK);
+	} 
+	@GetMapping
 	public ResponseEntity<?> getEmployee(){
 	    List<Employee> lists=employeeService.getAllEmployee();
 		return new ResponseEntity<>(lists,HttpStatus.OK);
@@ -38,13 +45,8 @@ public class EmployeeControler {
 		log.info("getEmployeeById Called...");
 		return new ResponseEntity<>(employeeService.finById(id),HttpStatus.OK);
 	}
-	@PostMapping()
-	public ResponseEntity<?> saveEmployee(@RequestBody EmpRequset request){
-		Employee emp= employeeService.saveEmployee(request);
-		log.info("saved employee with empid {} ",emp.getId());
-		return new ResponseEntity<>("saved employee with empid "+ emp.getId(),HttpStatus.OK);
-	} 
-	@PutMapping()
+	
+	@PutMapping
 	public ResponseEntity<?> updateEmployee(@RequestBody EmpRequset request){
 		log.info("updateEmployee Called...");
 		return new ResponseEntity<>("updateEmployee",HttpStatus.OK);
