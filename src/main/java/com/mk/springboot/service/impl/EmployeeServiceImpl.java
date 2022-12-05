@@ -1,8 +1,8 @@
 package com.mk.springboot.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.mk.springboot.bean.Employee;
@@ -25,8 +25,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return empr;
 	}
 	@Override
-	public List<Employee> getAllEmployee() {
-		return employeeRepository.findAll();
+	public Page<Employee> getAllEmployee(Pageable pageable) {
+		return employeeRepository.findAll(pageable);
 	}
 	@Override
 	public Employee finById(Integer id) {
