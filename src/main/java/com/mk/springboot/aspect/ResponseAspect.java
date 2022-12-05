@@ -23,9 +23,7 @@ public class ResponseAspect {
 		Object response = joinPoint.proceed();
 		ListingResponse<String, Long, Object> listingResponse = new ListingResponse<>();
 		Page<?> page = null;
-		log.debug("1.0");
 		if (response instanceof Page) {
-			log.debug("1.1");
 			page = (Page<?>) response;
 			listingResponse.setData(page.getContent());
 			listingResponse.getPageInfo().put("totalRecords", Long.valueOf(page.getTotalElements()));
