@@ -1,5 +1,7 @@
 package com.mk.springboot.contoller;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -50,11 +53,16 @@ public class EmployeeControler {
 		return new ResponseEntity<>(employeeService.finById(id),HttpStatus.OK);
 	}
 	
-	@PutMapping
-	public ResponseEntity<?> updateEmployee(@RequestBody EmpRequset request){
-		log.info("updateEmployee Called...");
-		return new ResponseEntity<>("updateEmployee",HttpStatus.OK);
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateEmployee(@PathVariable Integer id,@RequestBody EmpRequset request){
+		return new ResponseEntity<>(employeeService.updateEmployee(id, request),HttpStatus.OK);
 	}
+	
+	@PatchMapping("/{id}")
+	public ResponseEntity<?> updateEmployee(@PathVariable Integer id,@RequestBody Map<String, Object> fields){
+		return new ResponseEntity<>(employeeService.updateEmployeeByField(id, fields),HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteEmployee(@PathVariable Integer id){
 		log.info("deleteEmployee Called...");

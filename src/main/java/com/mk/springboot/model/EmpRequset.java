@@ -12,6 +12,6 @@ public class EmpRequset {
 	@NotBlank(message = "name can not be blank")
 	String name;
 	
-	@JsonProperty("emp_salary")
+	//@JsonProperty("emp_salary")
 	Integer salary;
 }
