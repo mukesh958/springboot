@@ -1,5 +1,9 @@
 package com.mk.springboot.contoller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -24,6 +28,7 @@ import com.mk.springboot.annotation.ConvertPageResponse;
 import com.mk.springboot.bean.Employee;
 import com.mk.springboot.model.EmpRequset;
 import com.mk.springboot.service.EmployeeService;
+import com.mk.springboot.utility.DateUtlity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,6 +57,17 @@ public class EmployeeControler {
 		log.info("getEmployeeById Called...");
 		return new ResponseEntity<>(employeeService.finById(id),HttpStatus.OK);
 	}
+	
+	@GetMapping("/{joiningStartDate}/{joiningEndDate}")
+	public ResponseEntity<?> getEmployeeBetweenTheJoiningDate(@PathVariable String joiningStartDate,@PathVariable String joiningEndDate) throws ParseException{
+		log.info("getEmployeeById Called...");
+		LocalDate joiningStartDate1=DateUtlity.convertStringToLocalDate(joiningStartDate);  
+		LocalDate joiningEndDate2=DateUtlity.convertStringToLocalDate(joiningEndDate);
+		
+		
+		return new ResponseEntity<>(employeeService.getEmployeeBetweenTheJoiningDate(joiningStartDate1,joiningEndDate2),HttpStatus.OK);
+	}
+	
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateEmployee(@PathVariable Integer id,@RequestBody EmpRequset request){

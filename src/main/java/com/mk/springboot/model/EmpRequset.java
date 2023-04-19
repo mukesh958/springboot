@@ -1,5 +1,7 @@
 package com.mk.springboot.model;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,4 +16,6 @@ public class EmpRequset {
 	
 	//@JsonProperty("emp_salary")
 	Integer salary;
+	
+	String joiningDate;
 }

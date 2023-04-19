@@ -1,5 +1,8 @@
 package com.mk.springboot.service;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -17,4 +20,6 @@ public interface EmployeeService {
 	public void deleteEmployeeById(Integer id);
 	public Employee updateEmployee(Integer d,EmpRequset emp);
 	public Employee updateEmployeeByField(Integer d,Map<String, Object> map);
+	
+	public List<Employee> getEmployeeBetweenTheJoiningDate( LocalDate joiningStartDate, LocalDate joiningEndDate);
 }

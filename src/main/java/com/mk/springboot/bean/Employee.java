@@ -1,5 +1,9 @@
 package com.mk.springboot.bean;
 
+import java.time.LocalDate;
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +18,10 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	String name;
-	Integer salary;
+	private String name;
+	private Integer salary;
+	
+	@Column(name = "joining_date")
+	private LocalDate joiningDate;
 
 }

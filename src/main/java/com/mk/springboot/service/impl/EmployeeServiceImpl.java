@@ -1,6 +1,10 @@
 package com.mk.springboot.service.impl;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,6 +18,7 @@ import com.mk.springboot.bean.Employee;
 import com.mk.springboot.model.EmpRequset;
 import com.mk.springboot.repositary.EmployeeRepository;
 import com.mk.springboot.service.EmployeeService;
+import com.mk.springboot.utility.DateUtlity;
 
 @Component
 public class EmployeeServiceImpl implements EmployeeService {
@@ -23,9 +28,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public Employee saveEmployee(EmpRequset emp) {
+		
+		
 		Employee e= new Employee();
 		e.setName(emp.getName());
 		e.setSalary(emp.getSalary());
+		
+		e.setJoiningDate(DateUtlity.convertStringToLocalDate(emp.getJoiningDate()));
 		Employee empr=employeeRepository.save(e);
 		return empr;
 	}
@@ -61,5 +70,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return employeeRepository.save(existingEmp.get());
 		}
 		return null;
+	}
+	@Override
+	public List<Employee> getEmployeeBetweenTheJoiningDate(LocalDate joiningStartDate, LocalDate joiningEndDate) {
+		return employeeRepository.findByJoiningDateBetween(joiningStartDate, joiningEndDate);
+		
 	}
 }
