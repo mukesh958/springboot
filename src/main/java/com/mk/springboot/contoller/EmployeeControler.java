@@ -1,9 +1,7 @@
 package com.mk.springboot.contoller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -22,14 +20,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mk.springboot.annotation.ConvertPageResponse;
+import com.mk.springboot.bean.Emp;
 import com.mk.springboot.bean.Employee;
 import com.mk.springboot.model.EmpRequset;
+import com.mk.springboot.repositary.EmpRepository;
 import com.mk.springboot.service.EmployeeService;
 import com.mk.springboot.utility.DateUtlity;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -39,6 +41,9 @@ public class EmployeeControler {
 
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	EmpRepository empRepository;
 	
 	@PostMapping
 	public ResponseEntity<?> saveEmployee(@Valid @RequestBody EmpRequset request){
@@ -58,15 +63,6 @@ public class EmployeeControler {
 		return new ResponseEntity<>(employeeService.finById(id),HttpStatus.OK);
 	}
 	
-	@GetMapping("/{joiningStartDate}/{joiningEndDate}")
-	public ResponseEntity<?> getEmployeeBetweenTheJoiningDate(@PathVariable String joiningStartDate,@PathVariable String joiningEndDate) throws ParseException{
-		log.info("getEmployeeById Called...");
-		LocalDate joiningStartDate1=DateUtlity.convertStringToLocalDate(joiningStartDate);  
-		LocalDate joiningEndDate2=DateUtlity.convertStringToLocalDate(joiningEndDate);
-		
-		
-		return new ResponseEntity<>(employeeService.getEmployeeBetweenTheJoiningDate(joiningStartDate1,joiningEndDate2),HttpStatus.OK);
-	}
 	
 	
 	@PutMapping("/{id}")
@@ -85,4 +81,14 @@ public class EmployeeControler {
 		employeeService.deleteEmployeeById(id);
 		return new ResponseEntity<>(id+ " Deleted Successfully.",HttpStatus.OK);
 	}
+	
+	@PostMapping("/savedEmp")
+	public ResponseEntity<?> saveEmp(@Valid @RequestBody EmpRequset request){
+		Emp e= new Emp();
+		e.setName(request.getName());
+		e.setRange(request.getJoiningDate());
+		e=empRepository.save(e);
+		log.info("Emp object saved.");
+		return new ResponseEntity<>("Emp object saved.",HttpStatus.OK);
+	} 
 }

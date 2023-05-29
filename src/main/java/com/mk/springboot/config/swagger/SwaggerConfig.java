@@ -2,28 +2,45 @@ package com.mk.springboot.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
     /**
      * http://localhost:8080/springootbasic/swagger-ui.html
      */
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build();
-    }
-
+	@Bean
+	public OpenAPI customOpenAPI() {
+	    return new OpenAPI()
+	    		.info(getInfo())
+	    		//.addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+	    		//.components(new Components().addSecuritySchemes("", securitySchemesItem))
+	    		;
+	}
+	private Info getInfo() {
+		Info info= new Info();
+		info.version("1.0.0");
+		info.title("Spring Boot Basic things.");
+		info.description("This Application contains all the Rest end point that is needed for basic operation.");
+		Contact contact= new Contact();
+		contact.setEmail("Mukesh958@gmail.com");
+		contact.setName("Mukesh Gupta");
+		contact.setUrl("It's dummy");
+		info.contact(contact);
+		
+		License license= new License();
+		license.setName("Dummy name");
+		license.setUrl("Dummy URL");
+		info.license(license);
+		
+		
+		return info;
+	}
 }
