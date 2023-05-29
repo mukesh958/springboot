@@ -1,10 +1,6 @@
 package com.mk.springboot.model;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
