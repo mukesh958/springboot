@@ -46,7 +46,7 @@ public class EmployeeControler {
 	EmpRepository empRepository;
 	
 	@PostMapping
-	public ResponseEntity<?> saveEmployee(@Valid @RequestBody EmpRequset request){
+	public ResponseEntity<String> saveEmployee(@Valid @RequestBody EmpRequset request){
 		Employee emp= employeeService.saveEmployee(request);
 		log.info("saved employee with empid {} ",emp.getId());
 		return new ResponseEntity<>("saved employee with empid "+ emp.getId(),HttpStatus.OK);
