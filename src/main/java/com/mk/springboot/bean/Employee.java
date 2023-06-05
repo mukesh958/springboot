@@ -1,7 +1,6 @@
 package com.mk.springboot.bean;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +21,9 @@ public class Employee {
 	private Integer salary;
 	
 	@Column(name = "joining_date")
-	private LocalDate joiningDate;
+	private LocalDateTime joiningDate;
+	
+	@Column(name = "admission_date",columnDefinition = "TIMESTAMP")
+	private LocalDateTime admissionDate;
 
 }

@@ -2,8 +2,6 @@ package com.mk.springboot.service.impl;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,7 +32,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		e.setName(emp.getName());
 		e.setSalary(emp.getSalary());
 		
-		e.setJoiningDate(DateUtlity.convertStringToLocalDate(emp.getJoiningDate()));
+		e.setJoiningDate(DateUtlity.convertDateToLocalDate(emp.getJoiningDate()));
+		
+		e.setAdmissionDate(emp.getAdmissionDate());
 		Employee empr=employeeRepository.save(e);
 		return empr;
 	}
