@@ -16,7 +16,7 @@ public class EmpScheduler {
 	EmployeeRepository employeeRepository;
 	
 	//Scheduler will start in 10 second
-	@Scheduled(fixedRate = 10000)
+	//@Scheduled(fixedRate = 10000)
 	public void getEmployee() {
 		System.out.println("Scheduler called.....");
 		List<Employee> empLst= employeeRepository.findAll();

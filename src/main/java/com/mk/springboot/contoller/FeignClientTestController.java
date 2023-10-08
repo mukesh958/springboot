@@ -1,7 +1,6 @@
 package com.mk.springboot.contoller;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,18 +18,12 @@ public class FeignClientTestController {
 	@Autowired
 	private UserClient userClient;
 
-	@Autowired
-	RestTemplate restTemplate;
+	
 
 	@GetMapping("/users")
 	public List<UserResponse> getAllDummyUser() {
 		return userClient.getAllUser();
 	}
 
-	@SuppressWarnings("unchecked")
-	@GetMapping("/usersRestClient")
-	public List<UserResponse> getAllDummyUserRestClient() {
-		return (List<UserResponse>) restTemplate.getForObject("https://jsonplaceholder.typicode.com/users",
-				Object.class);
-	}
+	
 }

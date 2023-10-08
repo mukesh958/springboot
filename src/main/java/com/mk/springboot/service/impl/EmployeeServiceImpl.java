@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import com.mk.springboot.bean.Employee;
+import com.mk.springboot.feign.api.client.EmployeeClient;
+import com.mk.springboot.feign.api.model.UserResponse;
 import com.mk.springboot.model.EmpRequset;
 import com.mk.springboot.repositary.EmployeeRepository;
 import com.mk.springboot.service.EmployeeService;
@@ -23,6 +27,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	EmployeeRepository employeeRepository;
+	
+	@Autowired
+	EmployeeClient employeeClient;
 	
 	@Override
 	public Employee saveEmployee(EmpRequset emp) {
@@ -76,4 +83,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.findByJoiningDateBetween(joiningStartDate, joiningEndDate);
 		
 	}
+	
+	@Override
+	public int deleteEmployeeByName(String name) {
+		return employeeRepository.deleteEmployeeByName(name);
+	}
+	
 }

@@ -1,5 +1,6 @@
 package com.mk.springboot.contoller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -52,6 +53,20 @@ public class EmployeeControler {
 	public Object getEmployee(@PageableDefault(size = 10,sort = "name",direction = Sort.Direction.ASC)Pageable pageable){
 		return employeeService.getAllEmployee(pageable);
 	} 
+	
+	@GetMapping("allEmployee")
+	public ResponseEntity<List<Emp>> getEmployee(){
+		log.info(" getEmployee Called");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<>(empRepository.findAll(),HttpStatus.OK) ;
+	} 
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getEmployeeById(@PathVariable Integer id){
 		log.info("getEmployeeById Called...");
@@ -86,4 +101,12 @@ public class EmployeeControler {
 		log.info("Emp object saved.");
 		return new ResponseEntity<>("Emp object saved.",HttpStatus.OK);
 	} 
+	@DeleteMapping("/deletebyname/{name}")
+	public ResponseEntity<?> deleteEmployeeByName(@PathVariable String name){
+		log.info("deleteEmployeeByName Called...");
+		int noOfRecordDeleted=employeeService.deleteEmployeeByName(name);
+		
+		return new ResponseEntity<>(noOfRecordDeleted+ " reord deleted.",HttpStatus.OK);
+	}
+	
 }

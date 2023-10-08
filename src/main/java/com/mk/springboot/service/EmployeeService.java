@@ -18,8 +18,11 @@ public interface EmployeeService {
 	public Page<Employee> getAllEmployee(Pageable pageable);
 	public Employee finById(Integer id);
 	public void deleteEmployeeById(Integer id);
+	public int deleteEmployeeByName(String name);
+	
 	public Employee updateEmployee(Integer d,EmpRequset emp);
 	public Employee updateEmployeeByField(Integer d,Map<String, Object> map);
 	
 	public List<Employee> getEmployeeBetweenTheJoiningDate( LocalDate joiningStartDate, LocalDate joiningEndDate);
+
 }
