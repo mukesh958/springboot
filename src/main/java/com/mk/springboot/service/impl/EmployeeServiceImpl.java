@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -50,6 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.findAll(pageable);
 	}
 	@Override
+	@Cacheable(value="employeeCache",key="#id")
 	public Employee finById(Integer id) {
 		return employeeRepository.findById(id).orElse(null);
 	}

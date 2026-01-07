@@ -1,7 +1,8 @@
 package com.mk.springboot.contoller;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.jupiter.api.Test;

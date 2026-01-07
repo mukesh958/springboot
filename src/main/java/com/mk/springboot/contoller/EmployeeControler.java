@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -41,6 +43,9 @@ public class EmployeeControler {
 	@Autowired
 	EmpRepository empRepository;
 	
+	@Autowired
+	CacheManager cacheManager;
+	
 	@PostMapping
 	public ResponseEntity<String> saveEmployee(@Valid @RequestBody EmpRequset request){
 		Employee emp= employeeService.saveEmployee(request);
@@ -70,6 +75,13 @@ public class EmployeeControler {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getEmployeeById(@PathVariable Integer id){
 		log.info("getEmployeeById Called...");
+		try {
+			//Thread.sleep(30000);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return new ResponseEntity<>(employeeService.finById(id),HttpStatus.OK);
 	}
 	
@@ -109,4 +121,10 @@ public class EmployeeControler {
 		return new ResponseEntity<>(noOfRecordDeleted+ " reord deleted.",HttpStatus.OK);
 	}
 	
+	@GetMapping("/cache/{id}")
+	public ResponseEntity<?> getEmployeeByIdUsingCache(@PathVariable Integer id){
+		log.info("getEmployeeById Called...");
+		Employee emp = employeeService.finById(id);
+		return new ResponseEntity<>(emp,HttpStatus.OK);
+	}
 }

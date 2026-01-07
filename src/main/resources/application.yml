@@ -1,2 +1,7 @@
+spring:
+  application:
+    name: springboot
+
 test:
- name: mUkesh From yml
+ name: Mukesh From yml
+ 
